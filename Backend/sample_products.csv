@@ -1,0 +1,6 @@
+sku,name,description,price,is_active
+SKU001,Wireless Headphones,High-quality wireless headphones with noise cancellation,99.99,true
+SKU002,Smartphone Case,Protective case for smartphones,19.99,true
+SKU003,USB Cable,Fast charging USB-C cable,12.99,true
+SKU004,Bluetooth Speaker,Portable Bluetooth speaker with excellent sound,79.99,true
+SKU005,Laptop Stand,Adjustable laptop stand for better ergonomics,45.99,false
