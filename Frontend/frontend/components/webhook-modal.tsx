@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { webhookSchema, type WebhookFormData } from '@/lib/validations';
+import { webhookSchema, type WebhookFormData, type WebhookFormInput } from '@/lib/validations';
 import { webhookApi } from '@/lib/api';
 import { Webhook } from '@/lib/types';
 import {
@@ -45,7 +45,7 @@ export default function WebhookModal({
     setValue,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<WebhookFormData>({
+  } = useForm<WebhookFormInput>({
     resolver: zodResolver(webhookSchema),
     defaultValues: {
       url: '',
@@ -67,13 +67,19 @@ export default function WebhookModal({
     }
   }, [webhook, setValue, reset]);
 
-  const onSubmit = async (data: WebhookFormData) => {
+  const onSubmit = async (data: WebhookFormInput) => {
     try {
       if (webhook) {
-        await webhookApi.updateWebhook(webhook.id, data);
+        await webhookApi.updateWebhook(webhook.id, {
+          ...data,
+          is_enabled: data.is_enabled ?? true,
+        });
         toast({ title: 'Webhook updated successfully' });
       } else {
-        await webhookApi.createWebhook(data);
+        await webhookApi.createWebhook({
+          ...data,
+          is_enabled: data.is_enabled ?? true,
+        });
         toast({ title: 'Webhook created successfully' });
       }
       onSuccess();

@@ -211,7 +211,7 @@ export default function UploadPage() {
               )}
             </div>
 
-            {status !== 'idle' && (
+            {(status === 'uploading' || status === 'parsing' || status === 'importing' || status === 'completed' || status === 'failed') && (
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between mb-2">

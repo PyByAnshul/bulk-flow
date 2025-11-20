@@ -122,7 +122,7 @@ export default function UploadPage() {
       </div>
 
       <Card className="p-8 max-w-2xl">
-        {status === 'idle' || !file ? (
+        {!file ? (
           <div
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDragDrop}
@@ -166,41 +166,39 @@ export default function UploadPage() {
               )}
             </div>
 
-            {status !== 'idle' && (
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm font-medium text-slate-700">
-                      {status === 'uploading'
-                        ? 'Uploading...'
-                        : status === 'parsing'
-                          ? 'Parsing CSV...'
-                          : status === 'importing'
-                            ? 'Importing products...'
-                            : status === 'completed'
-                              ? 'Complete!'
-                              : 'Failed'}
-                    </span>
-                    <span className="text-sm font-medium text-slate-700">
-                      {progress}%
-                    </span>
-                  </div>
-                  <div className="w-full bg-slate-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
+            <div className="space-y-4">
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span className="text-sm font-medium text-slate-700">
+                    {status === 'uploading'
+                      ? 'Uploading...'
+                      : status === 'parsing'
+                        ? 'Parsing CSV...'
+                        : status === 'importing'
+                          ? 'Importing products...'
+                          : status === 'completed'
+                            ? 'Complete!'
+                            : 'Failed'}
+                  </span>
+                  <span className="text-sm font-medium text-slate-700">
+                    {progress}%
+                  </span>
                 </div>
-
-                {totalRows > 0 && (
-                  <p className="text-sm text-slate-600">
-                    Processing: {processedRows.toLocaleString()} /{' '}
-                    {totalRows.toLocaleString()}
-                  </p>
-                )}
+                <div className="w-full bg-slate-200 rounded-full h-2">
+                  <div
+                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
               </div>
-            )}
+
+              {totalRows > 0 && (
+                <p className="text-sm text-slate-600">
+                  Processing: {processedRows.toLocaleString()} /{' '}
+                  {totalRows.toLocaleString()}
+                </p>
+              )}
+            </div>
 
             {status === 'failed' && errors.length > 0 && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4">

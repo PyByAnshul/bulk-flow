@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { productSchema, type ProductFormData } from '@/lib/validations';
+import { productSchema, type ProductFormData, type ProductFormInput } from '@/lib/validations';
 import { productApi } from '@/lib/api';
 import { Product } from '@/lib/types';
 import {
@@ -38,7 +38,7 @@ export default function ProductModal({
     reset,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<ProductFormData>({
+  } = useForm<ProductFormInput>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       sku: '',
@@ -63,13 +63,19 @@ export default function ProductModal({
     }
   }, [product, setValue, reset]);
 
-  const onSubmit = async (data: ProductFormData) => {
+  const onSubmit = async (data: ProductFormInput) => {
     try {
       if (product) {
-        await productApi.updateProduct(product.id, data);
+        await productApi.updateProduct(product.id, {
+          ...data,
+          is_active: data.is_active ?? true,
+        });
         toast({ title: 'Product updated successfully' });
       } else {
-        await productApi.createProduct(data);
+        await productApi.createProduct({
+          ...data,
+          is_active: data.is_active ?? true,
+        });
         toast({ title: 'Product created successfully' });
       }
       onSuccess();

@@ -11,8 +11,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Button, type ButtonProps } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
+
+type ButtonProps = React.ComponentProps<typeof Button>;
 
 interface DeleteDialogProps extends Omit<ButtonProps, 'children'> {
   title: string;
